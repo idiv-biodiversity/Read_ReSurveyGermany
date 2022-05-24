@@ -1,0 +1,48 @@
+# R code for the analyses in: 
+# Jandt, U., Bruelheide, H., Berg, C., Bernhardt-Römermann, M., 
+# Blüml, V., Bode, F., Dengler, J., Diekmann, M., Dierschke, H., 
+# Dörfler, I., Döring, U., Dullinger, S., Härdtle, W., # Haider, S., 
+# Heinken, T., Horchler, P., Jansen, F., Kudernatsch, T., Kuhn, G., 
+# Lindner, M., Matesanz, S., Metze, K., Meyer, S., Müller, F., 
+# Müller, N., Naaf, T., Peppler- Lisbach, C., Poschlod, P., Roscher, C., 
+# Rosenthal, G., Rumpf, S., Schmidt, W., Schrautzer, W., Schwabe, A., 
+# Schwartze, P., Sperle, T., Stanik, N., Stroh, H.-G., Storm, C., 
+# Voigt, W., von Heßberg, A., von Oheimb, G., Wagner, E.R., Wegener, U., 
+# Wesche, K., Wittig, B., Wulf, M. (2022): ReSurveyGermany: 
+# Vegetation-plot time-series over the past hundred years in Germany. 
+# Scientific Data
+#
+# Author: Helge Bruelheide, 24.05.2022
+
+### Load data
+setwd("c:\\Daten\\GVRD\\Data_GVRD6")  #choose your working directory
+DT <- read.csv(file="ReSurveyGermany.csv")
+DT <- data.table(DT)
+str(DT) #610313 obs. of  6 variables:
+# DT holds 
+# PROJECT_ID:     ID of the project
+# RELEVE_NR:      ID for plot records within the project
+# PROJECT_ID_RELEVE_NR: ID across all projects, links DT to header
+# LAYER:          code for the layer
+# TaxonName:      Harmonized taxonomic name
+# Cover_Perc:     Per cent cover of the species in the plot
+
+# Load header data
+header <- read.csv("Header_ReSurveyGermany.csv")
+str(header) # 23641 obs. of  47 variables:
+
+# Link DT to header
+index1 <- match(DT$PROJECT_ID_RELEVE_NR, header$PROJECT_ID_RELEVE_NR)
+
+# Create a variable for the time series
+header$RS_PROJECT_PLOT <- paste(header$PROJECT_ID, header$RS_PLOT, sep="_")
+length(unique(header$RS_PROJECT_PLOT))
+# In total, there are 7738 time series
+
+# Split RELEVE_NR_comb in DT into project-specific RELEVE_NR and project ID
+DT2$PROJECT_ID   <- as.numeric(tstrsplit(DT2$PROJECT_ID_RELEVE_NR,"_")[[1]])
+DT2$RELEVE_NR <- as.numeric(tstrsplit(DT2$PROJECT_ID_RELEVE_NR,"_")[[2]])
+
+length(unique(DT2$PROJECT_ID))
+# In total, there are 92 projects
+
