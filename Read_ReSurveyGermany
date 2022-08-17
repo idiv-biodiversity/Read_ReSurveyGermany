@@ -40,9 +40,9 @@ length(unique(header$RS_PROJECT_PLOT))
 # In total, there are 7738 time series
 
 # Split RELEVE_NR_comb in DT into project-specific RELEVE_NR and project ID
-DT2$PROJECT_ID   <- as.numeric(tstrsplit(DT2$PROJECT_ID_RELEVE_NR,"_")[[1]])
-DT2$RELEVE_NR <- as.numeric(tstrsplit(DT2$PROJECT_ID_RELEVE_NR,"_")[[2]])
+DT$PROJECT_ID   <- as.numeric(tstrsplit(DT$PROJECT_ID_RELEVE_NR,"_")[[1]])
+DT$RELEVE_NR <- as.numeric(tstrsplit(DT$PROJECT_ID_RELEVE_NR,"_")[[2]])
 
-length(unique(DT2$PROJECT_ID))
+length(unique(DT$PROJECT_ID))
 # In total, there are 92 projects
 
